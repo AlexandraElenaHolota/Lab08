@@ -13,7 +13,20 @@ class Controller:
         self.fillIDMap()
 
     def handleWorstCase(self, e):
-        # TO FILL
+        nerc = self._idMap[self._view._ddNerc.value]
+        maxY = self._view._txtYears.value
+        maxH = self._view._txtHours.value
+        self._model.worstCase(nerc, int(maxY), int(maxH))
+
+        self._view._txtOut.controls.clear()
+        self._view._txtOut.controls.append(
+            ft.Text(f"Tot people affected: {self._model.countCustomers(self._model._solBest)}"))
+        self._view._txtOut.controls.append(
+            ft.Text(f"Tot hours of outage: {self._model.sumDurata(self._model._solBest) / 60 / 60}"))
+
+        for v in self._model._solBest:
+            self._view._txtOut.controls.append(ft.Text(f"{v}"))
+        self._view.update_page()
         pass
 
     def fillDD(self):
